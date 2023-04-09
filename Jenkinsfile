@@ -24,7 +24,7 @@ pipeline {
                 script {
                     echo "building the docker image..."
 
-                     withDockerRegistry([ credentialsId: "ContainerRegistery", url: "" ]) {
+                     withDockerRegistry([ credentialsId: "ACR", url: "" ]) {
                         
                         sh " docker build -t microservicesb.azurecr.io/emailservice:${env.IMAGE_TAG} ./src/emailservice/  " 
                         
