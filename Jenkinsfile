@@ -4,7 +4,8 @@ pipeline {
     tools {
         maven 'maven'
     }
-    environment {
+    environment 
+       ACR_REPO_URL = "microservicesb.azurecr.io"
        IMAGE_TAG = '1.1.2'                              
    }
   stages {
@@ -18,21 +19,21 @@ pipeline {
             }
         }
         
-        stage('build, and Push image ') {
-            
+        stage('build image') {
             steps {
                 script {
                     echo "building the docker image..."
-
-                     withDockerRegistry([ credentialsId: "ACR", url: "microservicesb.azurecr.io" ]) {
+                    withCredentials([usernamePassword(credentialsId: 'ACR', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
-                        sh " docker build -t microservicesb.azurecr.io/emailservice:${env.IMAGE_TAG} ./src/emailservice/  " 
+                        sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
+                        sh " docker build -t microservicesb.azurecr.io/emailservice:${IMAGE_TAG} ./src/emailservice/  " 
                         
-        
+                        
                     }
                 }
             }
         }
+
 
 
 }
