@@ -4,8 +4,8 @@ pipeline {
     tools {
         maven 'maven'
     }
-    environment 
-       ACR_REPO_URL = "microservicesb.azurecr.io"
+    environment {
+        ACR_REPO_URL = 'microservicesb.azurecr.io'
        IMAGE_TAG = '1.1.2'                              
    }
   stages {
@@ -33,6 +33,7 @@ pipeline {
                 }
             }
         }
+
 
 
 
