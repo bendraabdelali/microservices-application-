@@ -27,6 +27,7 @@ pipeline {
                         
                         sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
                         sh " docker build -t microservicesb.azurecr.io/emailservice:${IMAGE_TAG} ./src/emailservice/  " 
+                        sh "docker push  microservicesb.azurecr.io/emailservice:${IMAGE_TAG} "
                         
                         
                     }
