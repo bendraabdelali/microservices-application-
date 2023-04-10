@@ -77,9 +77,10 @@ pipeline {
             script {
                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]){ 
                 
-                sh "if ls Microservice-Automated-Deployment-to-kubernetes-Cluster ; then rm -rf Microservice-Automated-Deployment-to-kubernetes-Cluster; fi "
-                sh ' git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
-                sh ' cd Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/' 
+                
+                sh ' [ -d "Microservice-Automated-Deployment-to-kubernetes-Cluster" ] && (cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git pull) || git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
+                
+               
                 
                 sh ' cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
                 
