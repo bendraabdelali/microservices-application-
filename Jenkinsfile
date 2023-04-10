@@ -79,10 +79,12 @@ pipeline {
                 sh "if ls Microservice-Automated-Deployment-to-kubernetes-Cluster ; then rm -rf Microservice-Automated-Deployment-to-kubernetes-Cluster; fi "
                 sh ' git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
                 sh ' cd Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/' 
-                sh "ls"
-                sh ' cat emailservice.yaml '
-                sh 'sed -i "s/\\(tag: \\).*/\\1\\"$BUILD_NUMBER\\"/" emailservice.yaml ; ls'
-                sh 'cat emailservice.yaml'
+                
+                sh ' cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
+                
+                sh 'sed -i "s/\\(tag: \\).*/\\1\\"$BUILD_NUMBER\\"/" Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
+                
+                sh 'cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml'
 
                 sh 'git commit -am "Updates emailservice.yaml  with $BUILD_NUMBER" ' 
 
