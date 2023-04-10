@@ -48,13 +48,16 @@ pipeline {
                         // sh " docker push  microservicesb.azurecr.io/productcatalogservice:${IMAGE_TAG} "
                       
                         // // cartservice
-                        sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src " 
-                        sh " docker push microservicesb.azurecr.io/cartservice:${IMAGE_TAG} " 
+                        // sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src " 
+                        // sh " docker push microservicesb.azurecr.io/cartservice:${IMAGE_TAG} " 
 
                         // adservice
-                        sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice/ " 
-                        sh " docker push microservicesb.azurecr.io/adservice:${IMAGE_TAG}  " 
+                        // sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice/ " 
+                        // sh " docker push microservicesb.azurecr.io/adservice:${IMAGE_TAG}  " 
                        
+                        // checkoutservice
+                        sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice/  " 
+                        sh " docker push microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG}   " 
                     
                     }
                 }
