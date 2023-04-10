@@ -79,7 +79,8 @@ pipeline {
 
                 sh ' if cd charts/microservices/values/; then git pull; else git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git; fi '
 
-               sh 'sed -i "s/\\(tag: \\).*/\\1\\"$BUILD_NUMBER\\"/" emailservice.yaml'
+                sh 'sed -i "s/\\(tag: \\).*/\\1\\"$BUILD_NUMBER\\"/" charts/microservices/values/emailservice.yaml'
+                sh 'cat charts/microservices/values/emailservice.yaml'
 
                 sh 'git commit -am "Updates emailservice.yaml  with $BUILD_NUMBER" ' 
 
