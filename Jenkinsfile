@@ -60,8 +60,13 @@ pipeline {
                         // sh " docker push microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG}   " 
                     
                         // shippingservice
-                        sh " docker build -t microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} ./src/shippingservice/ "
-                        sh " docker push microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} "
+                        // sh " docker build -t microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} ./src/shippingservice/ "
+                        // sh " docker push microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} "
+
+                        // frontend
+                        sh " docker build -t microservicesb.azurecr.io/frontend:${IMAGE_TAG} ./src/frontend/ "
+                        sh " docker push microservicesb.azurecr.io/frontend:${IMAGE_TAG} "
+
                     }
                 }
             }
