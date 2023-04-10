@@ -28,14 +28,17 @@ pipeline {
                         sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
 
                         sh " docker build -t microservicesb.azurecr.io/emailservice:${IMAGE_TAG} ./src/emailservice/  " 
-                        sh "docker push  microservicesb.azurecr.io/emailservice:${IMAGE_TAG} "
+                        sh " docker push  microservicesb.azurecr.io/emailservice:${IMAGE_TAG} "
                         
 
                         sh " docker build -t microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} ./src/currencyservice/ "
                         sh " docker push  microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} "
                         
                         sh " docker build -t microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} ./src/paymentservice/ "
-                        sh "docker push microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} "
+                        sh " docker push microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} "
+                        
+                        sh " docker build -t microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG} ./src/recommendationservice/ "
+                        sh " docker push microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG}  "
                     }
                 }
             }
