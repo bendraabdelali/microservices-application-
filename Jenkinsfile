@@ -56,9 +56,12 @@ pipeline {
                         // sh " docker push microservicesb.azurecr.io/adservice:${IMAGE_TAG}  " 
                        
                         // checkoutservice
-                        sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice/  " 
-                        sh " docker push microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG}   " 
+                        // sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice/  " 
+                        // sh " docker push microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG}   " 
                     
+                        // shippingservice
+                        sh " docker build -t microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} ./src/shippingservice/ "
+                        sh " docker push microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} "
                     }
                 }
             }
