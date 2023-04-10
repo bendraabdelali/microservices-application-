@@ -25,31 +25,35 @@ pipeline {
                     echo "building the docker image..."
                     withCredentials([usernamePassword(credentialsId: 'ACR', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
-                        sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
+                        // sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
 
-                        // emailservice
-                        sh " docker build -t microservicesb.azurecr.io/emailservice:${IMAGE_TAG} ./src/emailservice/  " 
-                        sh " docker push  microservicesb.azurecr.io/emailservice:${IMAGE_TAG} "
+                        // // emailservice
+                        // sh " docker build -t microservicesb.azurecr.io/emailservice:${IMAGE_TAG} ./src/emailservice/  " 
+                        // sh " docker push  microservicesb.azurecr.io/emailservice:${IMAGE_TAG} "
                         
-                        // currencyservice
-                        sh " docker build -t microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} ./src/currencyservice/ "
-                        sh " docker push  microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} "
+                        // // currencyservice
+                        // sh " docker build -t microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} ./src/currencyservice/ "
+                        // sh " docker push  microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} "
                         
-                        // paymentservice
-                        sh " docker build -t microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} ./src/paymentservice/ "
-                        sh " docker push microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} "
+                        // // paymentservice
+                        // sh " docker build -t microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} ./src/paymentservice/ "
+                        // sh " docker push microservicesb.azurecr.io/paymentservice:${IMAGE_TAG} "
                         
-                        // recommendationservice
-                        sh " docker build -t microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG} ./src/recommendationservice/ "
-                        sh " docker push microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG}  "
+                        // // recommendationservice
+                        // sh " docker build -t microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG} ./src/recommendationservice/ "
+                        // sh " docker push microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG}  "
 
-                        // productcatalogservice
-                        sh " docker build -t microservicesb.azurecr.io/productcatalogservice:${IMAGE_TAG} ./src/productcatalogservice/ "
-                        sh " docker push  microservicesb.azurecr.io/productcatalogservice:${IMAGE_TAG} "
+                        // // productcatalogservice
+                        // sh " docker build -t microservicesb.azurecr.io/productcatalogservice:${IMAGE_TAG} ./src/productcatalogservice/ "
+                        // sh " docker push  microservicesb.azurecr.io/productcatalogservice:${IMAGE_TAG} "
                       
-                        // cartservice
+                        // // cartservice
                         sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src " 
                         sh " docker microservicesb.azurecr.io/cartservice:${IMAGE_TAG} " 
+
+                        // adservice
+                        sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice/ " 
+                        sh " docker push microservicesb.azurecr.io/adservice:${IMAGE_TAG}  " 
                        
                     
                     }
