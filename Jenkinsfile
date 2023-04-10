@@ -49,7 +49,7 @@ pipeline {
                       
                         // // cartservice
                         sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src " 
-                        sh " docker microservicesb.azurecr.io/cartservice:${IMAGE_TAG} " 
+                        sh " docker push microservicesb.azurecr.io/cartservice:${IMAGE_TAG} " 
 
                         // adservice
                         sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice/ " 
