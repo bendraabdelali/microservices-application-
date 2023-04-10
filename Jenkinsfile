@@ -26,10 +26,13 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'ACR', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
                         
                         sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
+                        
                         sh " docker build -t microservicesb.azurecr.io/emailservice:${IMAGE_TAG} ./src/emailservice/  " 
                         sh "docker push  microservicesb.azurecr.io/emailservice:${IMAGE_TAG} "
-                        
-                        
+
+                        sh " docker build -t microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} ./src/currencyservice/ "
+                        sh " docker push  microservicesb.azurecr.io/currencyservice:${IMAGE_TAG} "
+
                     }
                 }
             }
