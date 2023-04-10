@@ -14,7 +14,6 @@ pipeline {
                 script {
                     echo 'incrementing adservice microservices version...'
 
-                    
                 }
             }
         }
@@ -63,11 +62,35 @@ pipeline {
                         // sh " docker build -t microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} ./src/shippingservice/ "
                         // sh " docker push microservicesb.azurecr.io/shippingservice:${IMAGE_TAG} "
 
-                        // frontend
-                        sh " docker build -t microservicesb.azurecr.io/frontend:${IMAGE_TAG} ./src/frontend/ "
-                        sh " docker push microservicesb.azurecr.io/frontend:${IMAGE_TAG} "
-
+                        // // frontend
+                        // sh " docker build -t microservicesb.azurecr.io/frontend:${IMAGE_TAG} ./src/frontend/ "
+                        // sh " docker push microservicesb.azurecr.io/frontend:${IMAGE_TAG} "
+                        
                     }
+                }
+            }
+        }
+
+        stage('deploy') {
+
+        steps {
+            script {
+               withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]){ 
+                
+                sh '''
+
+                    if cd charts/microservices/values/; then git pull; else git clone https://github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git; fi
+                     
+                    sed -i 's/\(tag: \).*/\1"$BUILD_NUMBER"/' emailservice.yaml
+            
+                    git commit -am "Updates emailservice.yaml  with $BUILD_NUMBER"
+                    
+                    git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git
+                       
+                '''
+            }
+                
+        
                 }
             }
         }
