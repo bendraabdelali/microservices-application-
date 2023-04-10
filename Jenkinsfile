@@ -78,7 +78,7 @@ pipeline {
                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]){ 
                 sh "if ls Microservice-Automated-Deployment-to-kubernetes-Cluster ; then rm -rf Microservice-Automated-Deployment-to-kubernetes-Cluster; fi "
                 sh ' git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
-                sh ' ls charts/microservices/values ' 
+                sh ' cd Microservice-Automated-Deployment-to-kubernetes-Cluster' 
                 sh 'sed -i "s/\\(tag: \\).*/\\1\\"$BUILD_NUMBER\\"/" charts/microservices/values/emailservice.yaml'
                 sh 'cat charts/microservices/values/emailservice.yaml'
 
