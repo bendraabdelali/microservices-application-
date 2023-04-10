@@ -82,14 +82,14 @@ pipeline {
                 sh 'git config --global user.name "jenkins"'
 
                 sh 'rm -rf Microservice-Automated-Deployment-to-kubernetes-Cluster '    
-                sh ' [ -d "Microservice-Automated-Deployment-to-kubernetes-Cluster" ] && (cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git pull) || git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
-
-                sh ' cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
+                
+                sh ' [ -d "Microservice-Automated-Deployment-to-kubernetes-Cluster" ] && 
+                     (cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git pull) || 
+                     git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
                 
                 sh 'sed -i "s/\\(tag: \\).*/\\1\\"$IMAGE_TAG\\"/" Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
-                
-                sh 'cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml'
 
+                sh 'git add . '
                 sh 'git commit -am "Updates emailservice.yaml  with $IMAGE_TAG" ' 
 
                 sh ' git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git ' 
