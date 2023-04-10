@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
-       IMAGE_TAG = '1.1.2'                              
+        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
    }
   stages {
         stage('build') {
@@ -76,17 +76,18 @@ pipeline {
         steps {
             script {
                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]){ 
+                
                 sh "if ls Microservice-Automated-Deployment-to-kubernetes-Cluster ; then rm -rf Microservice-Automated-Deployment-to-kubernetes-Cluster; fi "
                 sh ' git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
                 sh ' cd Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/' 
                 
                 sh ' cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
                 
-                sh 'sed -i "s/\\(tag: \\).*/\\1\\"$BUILD_NUMBER\\"/" Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
+                sh 'sed -i "s/\\(tag: \\).*/\\1\\"$IMAGE_TAG\\"/" Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
                 
                 sh 'cat Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml'
 
-                sh 'git commit -am "Updates emailservice.yaml  with $BUILD_NUMBER" ' 
+                sh 'git commit -am "Updates emailservice.yaml  with $IMAGE_TAG" ' 
 
                 sh ' git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git ' 
           
