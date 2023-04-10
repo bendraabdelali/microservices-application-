@@ -76,18 +76,16 @@ pipeline {
         steps {
             script {
                withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]){ 
-                
-                sh '''
 
-                    if cd charts/microservices/values/; then git pull; else git clone https://github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git; fi
-                     
-                    sed -i 's/\(tag: \).*/\1"$BUILD_NUMBER"/' emailservice.yaml
-            
-                    git commit -am "Updates emailservice.yaml  with $BUILD_NUMBER"
-                    
-                    git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git
+                sh ' if cd charts/microservices/values/; then git pull; else git clone https://github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git; fi '
+
+                sh 'sed -i "s/\(tag: \).*/\1\"$BUILD_NUMBER\"/" emailservice.yaml'
+
+                sh 'git commit -am "Updates emailservice.yaml  with $BUILD_NUMBER" ' 
+
+                sh ' git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git ' 
+          
                        
-                '''
             }
                 
         
