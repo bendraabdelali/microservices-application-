@@ -90,9 +90,9 @@ pipeline {
                 sh 'sed -i "s/\\(tag: \\).*/\\1\\"$IMAGE_TAG\\"/" Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml '
                 
                 sh "git remote set-url origin https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git "
-                sh 'git add Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/emailservice.yaml  '
-                sh 'git commit -am "Updates emailservice.yaml  with $IMAGE_TAG" ' 
-                sh 'git push origin HEAD:main ' 
+                sh 'cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git add charts/microservices/values/emailservice.yaml  '
+                sh 'cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git commit -am "Updates emailservice.yaml  with $IMAGE_TAG" ' 
+                sh 'cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git push origin HEAD:main ' 
                 // sh ' git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git ' 
                     
             }        
