@@ -1,0 +1,81 @@
+#!/usr/bin/env groovy
+pipeline {
+    agent any
+
+    environment {
+        ACR_REPO_URL = 'microservicesb.azurecr.io'
+        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
+   }
+
+  stages {
+             
+        stage(' build image ') {
+            steps {
+                script {
+                    echo "building the docker image..."
+                    sh " docker build -t microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG} ."
+
+                    }
+                
+            }
+        }
+
+        stage(' test image ') {
+            steps {
+                script {
+                    echo "test the docker image..."
+                          
+                    }
+                }
+            }
+
+        stage(' push image to ACR ') {
+            steps {
+                script {
+                    echo "pushing the docker image..."
+                    withCredentials([usernamePassword(credentialsId: 'ACR', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                        
+                        sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
+                        sh " docker push microservicesb.azurecr.io/recommendationservice:${IMAGE_TAG} "
+    
+                    }
+                }
+            }
+        }
+  
+        
+    
+        stage('trriger ArgoCD application') {
+
+        steps {
+            script {
+               withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'PASS', usernameVariable: 'USER')]){ 
+                
+                //git config here for the first time run
+                sh 'git config --global user.email "jenkins@jenkins.com"'
+                sh 'git config --global user.name "jenkins"'  
+
+                sh ' [ -d "Microservice-Automated-Deployment-to-kubernetes-Cluster" ] && \
+                     (cd Microservice-Automated-Deployment-to-kubernetes-Cluster && git pull) || \
+                     git clone https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git '
+                
+                sh 'sed -i "s/\\(tag: \\).*/\\1\\"$IMAGE_TAG\\"/" Microservice-Automated-Deployment-to-kubernetes-Cluster/charts/microservices/values/recommendationservice.yaml '
+                
+                sh "git remote set-url origin https://${USER}:${PASS}@github.com/${USER}/Microservice-Automated-Deployment-to-kubernetes-Cluster.git "
+                
+                sh 'cd Microservice-Automated-Deployment-to-kubernetes-Cluster && \
+                    git add charts/microservices/values/recommendationservice.yaml && \
+                    git commit -am "Updates recommendationservice.yaml  with $IMAGE_TAG tag " && \
+                    git push origin HEAD:main ' 
+                 
+            }        
+        
+                }
+            }
+        }
+
+
+
+
+}
+}
