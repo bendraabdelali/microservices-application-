@@ -91,8 +91,8 @@ pipeline {
 
                 sh 'git add . '
                 sh 'git commit -am "Updates emailservice.yaml  with $IMAGE_TAG" ' 
-
-                sh ' git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git ' 
+                sh 'git push origin HEAD:main ' 
+                // sh ' git push https://${USER}:${PASS}@github.com/bendraabdelali/Microservice-Automated-Deployment-to-kubernetes-Cluster.git ' 
                     
             }        
         
