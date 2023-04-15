@@ -24,10 +24,12 @@ pipeline {
             steps {
                 script {
                     echo "test the docker image..."
+                    sh 'go test .'
                           
                     }
                 }
-            }
+        }
+        
 
         stage(' push image to ACR ') {
             steps {
