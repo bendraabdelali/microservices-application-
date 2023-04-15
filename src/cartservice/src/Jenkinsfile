@@ -74,7 +74,7 @@ pipeline {
                 
                 sh 'cd Microservice-Automated-Deployment-to-kubernetes-Cluster && \
                     git add charts/microservices/values/cartservice.yaml && \
-                    git commit -am "Updates cartservice.yaml  with $IMAGE_TAG tag " && \
+                    git commit -am "Update tag in  cartservice.yaml  with $IMAGE_TAG  " && \
                     git push origin HEAD:main ' 
                  
             }        
