@@ -36,19 +36,7 @@ pipeline {
                 }
             }
 
-        // stage('SonarQube Analysis') {
-        //     steps {
-        //         script {
-
-        //            sh " gradle sonar \
-        //             -Dsonar.projectKey=microservices \
-        //             -Dsonar.projectName='microservices' \
-        //             -Dsonar.host.url=http://sonarqube:9000 \
-        //             -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
-        //         }
-        //         }
-        //     }
-        
+      
         stage('SonarQube Analysis') {
                 def scannerHome = tool 'sonarqube'
                 withSonarQubeEnv('sonarqube') {
