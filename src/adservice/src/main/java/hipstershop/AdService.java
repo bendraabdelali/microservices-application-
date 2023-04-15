@@ -189,7 +189,7 @@ public final class AdService {
 		// TODO(arbrown) Implement OpenTelemetry tracing
 
 		logger.info("Tracing enabled - Stackdriver exporter initialized.");
-		logger.info("Tracing enabled - Stackdriver exporter initialized.");
+
 	}
 
 	/** Main launches the server from the command line. */

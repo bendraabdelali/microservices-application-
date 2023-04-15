@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
-        IMAGE_TAG = "1.1.2"                   
+        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
    }
    
 
@@ -19,22 +19,14 @@ pipeline {
                 script {
                     echo "building the docker image..."
                         
-                    // sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice" 
+                    sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice" 
                        
                     }
                 
             }
         }
 
-        stage(' Syft Docker Scan Image Security ') {
-            steps {
-                script {
-                    echo "test the docker image..."
-                    // sh " docker sbom microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
-                        
-                    }
-                }
-            }
+       
 
         stage('SonarQube analysis') {
             steps {
@@ -65,8 +57,6 @@ pipeline {
                 }
             }
         }
-  
-        
     
         stage('trriger ArgoCD application') {
 

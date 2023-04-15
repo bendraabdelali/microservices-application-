@@ -21,8 +21,8 @@ def jacksonDatabindVersion = "2.14.2"
 def protocVersion = "3.21.12"
 
 tasks.withType(JavaCompile) {
-    sourceCompatibility = JavaVersion.VERSION_19
-    targetCompatibility = JavaVersion.VERSION_19
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 ext {
