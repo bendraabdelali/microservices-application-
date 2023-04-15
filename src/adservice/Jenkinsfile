@@ -2,7 +2,7 @@
 pipeline {
     agent any
     tools {
-        gradlew 'gradlew'
+        gradle 'gradle'
     }
 
     environment {
@@ -39,7 +39,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                   sh " ./gradlew sonar \
+                   sh " ./gradle sonar \
                     -Dsonar.projectKey=microservices \
                     -Dsonar.projectName='microservices' \
                     -Dsonar.host.url=http://localhost:9000 \
