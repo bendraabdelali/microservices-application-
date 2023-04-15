@@ -1,6 +1,9 @@
 #!/usr/bin/env groovy
 pipeline {
     agent any
+     tools {
+        sonar-scanner 'sonar-scanner'
+    }
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
