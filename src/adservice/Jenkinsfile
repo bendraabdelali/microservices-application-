@@ -39,7 +39,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                   sh " ./gradle sonar \
+                   sh " ./gradlew sonar \
                     -Dsonar.projectKey=microservices \
                     -Dsonar.projectName='microservices' \
                     -Dsonar.host.url=http://localhost:9000 \
