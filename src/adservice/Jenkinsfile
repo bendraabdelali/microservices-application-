@@ -39,7 +39,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh "./src/adservice/gradlew  sonar -Dsonar.projectKey=microservices \
+                    sh "cd ./src/adservice/ && ./gradlew  sonar -Dsonar.projectKey=microservices \
                     -Dsonar.projectName='microservices' \
                     -Dsonar.host.url=http://sonarqube:9000 \
                     -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
