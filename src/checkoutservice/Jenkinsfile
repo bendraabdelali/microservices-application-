@@ -14,7 +14,8 @@ pipeline {
                 script {
                     echo "building the docker image..."
 
-                    
+                    sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice"
+
                     }
                 
             }
@@ -40,7 +41,7 @@ pipeline {
         }
 
         stage("Quality Gate"){
-            timeout(time: 1, unit: 'HOURS') { /
+            timeout(time: 1, unit: 'HOURS') { 
                 def qg = waitForQualityGate() 
                 if (qg.status != 'OK') {
                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
@@ -56,7 +57,7 @@ pipeline {
                         
                         sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
 
-                        sh " docker push microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} " 
+                        sh "docker push microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} " 
     
                     }
                 }
