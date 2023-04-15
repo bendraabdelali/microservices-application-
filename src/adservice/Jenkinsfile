@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
-        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
+        IMAGE_TAG = "1.1.2"                   
    }
    
 
@@ -19,7 +19,7 @@ pipeline {
                 script {
                     echo "building the docker image..."
                         
-                    sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice" 
+                    // sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice" 
                        
                     }
                 
@@ -39,7 +39,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh "./gradlew sonar -Dsonar.projectKey=microservices \
+                    sh "./src/adservice/gradlew  sonar -Dsonar.projectKey=microservices \
                     -Dsonar.projectName='microservices' \
                     -Dsonar.host.url=http://sonarqube:9000 \
                     -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
