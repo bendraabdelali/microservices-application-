@@ -36,11 +36,11 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 script {
-                    ./gradlew sonar \
+                   sh " ./gradlew sonar \
                     -Dsonar.projectKey=microservices \
                     -Dsonar.projectName='microservices' \
                     -Dsonar.host.url=http://localhost:9000 \
-                    -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d
+                    -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
                 }
                 }
             }
