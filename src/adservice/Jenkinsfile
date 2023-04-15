@@ -1,7 +1,9 @@
 #!/usr/bin/env groovy
 pipeline {
     agent any
-    
+    tools {
+        gradlew 'gradlew'
+    }
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
