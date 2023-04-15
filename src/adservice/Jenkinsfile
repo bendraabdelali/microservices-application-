@@ -10,13 +10,14 @@ pipeline {
    
 
   stages {
+
              
         stage(' build image ') {
             steps {
                 script {
                     echo "building the docker image..."
                         
-                        sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ." 
+                    sh " docker build -t microservicesb.azurecr.io/adservice:${IMAGE_TAG} ./src/adservice" 
                        
                     }
                 
