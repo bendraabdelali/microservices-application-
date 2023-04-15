@@ -14,7 +14,7 @@ pipeline {
                 script {
                     echo "building the docker image..."
 
-                        sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} . " 
+                    // sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src/ " 
                     
                     }
                 
