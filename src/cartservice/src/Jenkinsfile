@@ -39,20 +39,7 @@ pipeline {
                 }
             }
         }
-
-        stage('SonarQube analysis') {
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh " sonar-scanner \
-                        -Dsonar.projectKey=cartservice \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://localhost:9000 \
-                        -Dsonar.token=sqp_62726bcc63c3a52dcecd38d9e157d0b55e9f7b65 "
-                }
-            }
-        }
         
-
         stage(' push image to ACR ') {
             steps {
                 script {
