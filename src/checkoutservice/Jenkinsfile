@@ -13,7 +13,8 @@ pipeline {
             steps {
                 script {
                     echo "building the docker image..."
-                    sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice " 
+                    
+                    sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice"
 
                     }
                 
@@ -45,8 +46,9 @@ pipeline {
                 if (qg.status != 'OK') {
                 error "Pipeline aborted due to quality gate failure: ${qg.status}"
                 }
+           }
         }
-        }
+
         stage(' push image to ACR ') {
             steps {
                 script {
