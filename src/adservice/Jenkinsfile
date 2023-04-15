@@ -36,7 +36,21 @@ pipeline {
                 }
             }
 
-      
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('sonarqube') {
+                    sh "./gradlew sonar -Dsonar.projectKey=microservices \
+                    -Dsonar.projectName='microservices' \
+                    -Dsonar.host.url=http://sonarqube:9000 \
+                    -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
+                }
+            }
+        }
+        stage("Quality gate") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
         stage('SonarQube Analysis') {
              steps {
                 
