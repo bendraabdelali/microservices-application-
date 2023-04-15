@@ -30,8 +30,7 @@ pipeline {
 
                     withSonarQubeEnv('sonarqube') {
 
-                    sh " ${scannerHome}/bin/sonar-scanner \\ 
-                        -Dsonar.projectKey=cartservice \
+                    sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=cartservice \
                         -Dsonar.sources=. \
                         -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.token=sqp_62726bcc63c3a52dcecd38d9e157d0b55e9f7b65"
