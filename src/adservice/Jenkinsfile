@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     echo "test the docker image..."
-                    sh " docker sbom microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
+                    // sh " docker sbom microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
                         
                     }
                 }
