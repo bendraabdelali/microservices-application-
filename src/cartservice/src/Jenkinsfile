@@ -20,15 +20,20 @@ pipeline {
                 
             }
         }
-
-        stage(' test image ') {
+        
+        stage('SonarQube analysis') {
             steps {
-                script {
-                    echo "test the docker image..."
-                          
-                    }
+                withSonarQubeEnv('sonarqube') {
+                    sh "
+                    sonar-scanner \
+                    -Dsonar.projectKey=tst \
+                    -Dsonar.sources=. \
+                    -Dsonar.host.url=http://sonarqube:9000 \
+                    -Dsonar.token=sqp_d378d1b4abb59a0a48dccc0d4a6ceeafb94e8f37 "
                 }
             }
+        }
+        
 
         stage(' push image to ACR ') {
             steps {
