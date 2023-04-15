@@ -1,11 +1,15 @@
 #!/usr/bin/env groovy
 pipeline {
     agent any
+    tools {
+        sonar-scanner 'sonar-scanner'
+    }
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
         IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
    }
+   
 
   stages {
              
@@ -21,14 +25,30 @@ pipeline {
             }
         }
 
-        stage(' test image ') {
+        stage(' Syft Docker Scan Image Security ') {
             steps {
                 script {
                     echo "test the docker image..."
-                          
+                    sh " docker sbom microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
+                        
                     }
                 }
             }
+
+        stage('SonarQube Analysis') {
+            steps {
+                script {
+                    ./gradlew sonar \
+                    -Dsonar.projectKey=microservices \
+                    -Dsonar.projectName='microservices' \
+                    -Dsonar.host.url=http://localhost:9000 \
+                    -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d
+                }
+                }
+            }
+        }
+        
+
 
         stage(' push image to ACR ') {
             steps {
