@@ -1,9 +1,7 @@
 #!/usr/bin/env groovy
 pipeline {
     agent any
-    tools {
-        sonar-scanner "sonar"
-    } 
+   
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
@@ -23,7 +21,14 @@ pipeline {
                 
             }
         }
-        
+
+        stage('SonarQube Analysis') {
+            def scannerHome = tool 'sonar-scanner';
+            withSonarQubeEnv() {
+            sh "${scannerHome}/bin/sonar-scanner"
+            }
+        }
+
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {
