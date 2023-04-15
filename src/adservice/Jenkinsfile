@@ -38,8 +38,8 @@ pipeline {
 
         stage('SonarQube analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') {
-                    
+                withSonarQubeEnv('sonarqube') {\
+                    sh "java -version"
                     sh "cd ./src/adservice/ && \
                        chmod +x gradlew && \
                      ./gradlew  sonar -Dsonar.projectKey=microservices \
