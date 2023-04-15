@@ -2,3 +2,6 @@ secret.txt
 config.yaml
 install.sh
 helmfile.yaml
+.metals/*
+.vscode/*
+Jenkinsfile

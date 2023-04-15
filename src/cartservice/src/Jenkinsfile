@@ -28,10 +28,10 @@ pipeline {
             steps {
                 withSonarQubeEnv('sonarqube') {
                     sh " sonar-scanner \
-                    -Dsonar.projectKey=tst \
-                    -Dsonar.sources=. \
-                    -Dsonar.host.url=http://sonarqube:9000 \
-                    -Dsonar.token=sqp_d378d1b4abb59a0a48dccc0d4a6ceeafb94e8f37 "
+                        -Dsonar.projectKey=cartservice \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=http://localhost:9000 \
+                        -Dsonar.token=sqp_62726bcc63c3a52dcecd38d9e157d0b55e9f7b65 "
                 }
             }
         }
