@@ -195,6 +195,7 @@ public final class AdService {
   private static void initStats() {
     if (System.getenv("DISABLE_STATS") != null) {
       logger.info("Stats disabled.");
+      logger.info("Stats disabled.");
       return;
     }
     logger.info("Stats enabled, but temporarily unavailable");
