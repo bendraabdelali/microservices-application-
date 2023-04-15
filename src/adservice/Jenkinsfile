@@ -30,8 +30,7 @@ pipeline {
             steps {
                 script {
                     echo "test the docker image..."
-                    
-                    // sh " docker scan microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
+                    // sh " docker sbom microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
                         
                     }
                 }
@@ -49,7 +48,8 @@ pipeline {
                     -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
                 }
             }
-
+        }
+       
     
         stage(' push image to ACR ') {
             steps {
