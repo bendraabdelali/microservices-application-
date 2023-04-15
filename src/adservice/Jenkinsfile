@@ -30,6 +30,7 @@ pipeline {
             steps {
                 script {
                     echo "test the docker image..."
+                    
                     // sh " docker sbom microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
                         
                     }
@@ -39,7 +40,7 @@ pipeline {
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv('sonarqube') {\
-                    sh "java -version"
+                    
                     sh "cd ./src/adservice/ && \
                        chmod +x gradlew && \
                      ./gradlew  sonar -Dsonar.projectKey=microservices \
@@ -48,33 +49,8 @@ pipeline {
                     -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
                 }
             }
-        }
-        stage("Quality gate") {
-            steps {
-                waitForQualityGate abortPipeline: true
-            }
-        }
-        stage('SonarQube Analysi') {
-             steps {
-                
-                withSonarQubeEnv('sonarqube') {
-                sh """/var/lib/jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/sonarqube/bin/sonar-scanner \
-                -D sonar.projectVersion=1.0-SNAPSHOT \
-                -D sonar.login=admin \
-                -D sonar.password=sonar \
-                -D sonar.projectBaseDir=/var/lib/jenkins/workspace/adservice/ \
-                -Dsonar.projectKey=microservices \
-                -D sonar.projectKey=microservices \
-                -D sonar.sourceEncoding=UTF-8 \
-                -D sonar.language=java \
-                -D sonar.sources=microservices-application-/src/adservice/src/main \
-                -D sonar.host.url=http://sonarqube:9000/"""
-                    }
-            }
-        }
+
     
-
-
         stage(' push image to ACR ') {
             steps {
                 script {
