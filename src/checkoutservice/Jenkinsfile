@@ -30,7 +30,7 @@ pipeline {
                     withSonarQubeEnv('sonarqube') {
 
                     sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=checkoutservice \
-                        -Dsonar.sources=. \
+                        -Dsonar.sources=./src/checkoutservice/   \
                         -Dsonar.host.url=http://sonarqube:9000 \
                         -Dsonar.token=sqp_c16c0e2311e1e89e79ef351b7747a7eacf57242f "
                     
