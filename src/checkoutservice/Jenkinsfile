@@ -14,7 +14,7 @@ pipeline {
                 script {
                     echo "building the docker image..."
 
-                    sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice"
+                    // sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice"
 
                     }
                 
@@ -36,7 +36,7 @@ pipeline {
                     sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=checkoutservice \
                         -Dsonar.sources=./src/checkoutservice/   \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        
+                       
                     
                     } 
                 }
