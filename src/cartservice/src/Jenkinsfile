@@ -55,7 +55,7 @@ pipeline {
                         
                         sh "echo $PASS | docker login -u $USER --password-stdin ${ACR_REPO_URL}"
 
-                        sh " docker push  microservicesb.azurecr.io/cartservice:${IMAGE_TAG} . " 
+                        sh " docker push  microservicesb.azurecr.io/cartservice:${IMAGE_TAG} " 
     
                     }
                 }
