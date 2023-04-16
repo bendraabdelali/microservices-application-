@@ -14,7 +14,7 @@ pipeline {
                 script {
                     echo "building the docker image..."
 
-                    sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice"
+                    // sh " docker build -t microservicesb.azurecr.io/checkoutservice:${IMAGE_TAG} ./src/checkoutservice"
 
                     }
                 
@@ -23,6 +23,9 @@ pipeline {
 
 
         stage('SonarQube Analysis') {
+            environment {
+                SonarQube_Token = credentials('CheckoutServiceToken')
+            }
             steps{
                 script {
                     
@@ -33,7 +36,7 @@ pipeline {
                     sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=checkoutservice \
                         -Dsonar.sources=./src/checkoutservice/   \
                         -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.token=sqp_c16c0e2311e1e89e79ef351b7747a7eacf57242f "
+                        -Dsonar.token=${SonarQube_Token} "
                     
                     } 
                 }
