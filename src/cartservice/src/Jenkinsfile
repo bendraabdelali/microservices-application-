@@ -5,7 +5,8 @@ pipeline {
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
-        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
+        IMAGE_TAG = "1.1.${BUILD_NUMBER}" 
+        SonarQube_url = "http://sonarqube:9000"                  
    }
 
   stages {
@@ -15,7 +16,7 @@ pipeline {
                 script {
                     echo "building the docker image..."
 
-                    // sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src/ " 
+                    sh " docker build -t microservicesb.azurecr.io/cartservice:${IMAGE_TAG} ./src/cartservice/src/ " 
                     
                     }
                 
@@ -23,6 +24,12 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
+            
+            environment {
+                SonarQube_Token = credentials('CartToken')
+                
+            }
+
             steps{
                 script {
                     
@@ -30,10 +37,10 @@ pipeline {
 
                     withSonarQubeEnv('sonarqube') {
 
-                    sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=cartservice \
-                        -Dsonar.sources=. \
-                        -Dsonar.host.url=http://sonarqube:9000 \
-                        -Dsonar.token=sqp_62726bcc63c3a52dcecd38d9e157d0b55e9f7b65"
+                    sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=CartService  \
+                        -Dsonar.sources=./src/cartservice/ \
+                        -Dsonar.host.url=${SonarQube_url} \
+                        -Dsonar.token=${SonarQube_Token} "
                     
                     } 
                 }
