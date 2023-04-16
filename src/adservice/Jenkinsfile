@@ -7,7 +7,8 @@ pipeline {
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
-        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
+        IMAGE_TAG = "1.1.${BUILD_NUMBER}"
+        SonarQube_url = "http://sonarqube:9000"                   
    }
    
 
@@ -29,15 +30,19 @@ pipeline {
        
 
         stage('SonarQube analysis') {
+            environment {
+                SonarQube_Token = credentials('adServiceToken')
+                
+            }
             steps {
                 withSonarQubeEnv('sonarqube') {\
                     
                     sh "cd ./src/adservice/ && \
                        chmod +x gradlew && \
-                     ./gradlew  sonar -Dsonar.projectKey=microservices \
-                    -Dsonar.projectName='microservices' \
-                    -Dsonar.host.url=http://sonarqube:9000 \
-                    -Dsonar.token=sqp_2435605731d09e21da635feb73b5eb06354be38d "
+                       ./gradlew  sonar -Dsonar.projectKey = microservices \
+                       -Dsonar.projectName = 'microservices' \
+                       -Dsonar.host.url = ${SonarQube_url} \
+                       -Dsonar.token = ${SonarQube_Token} "
                 }
             }
         }
