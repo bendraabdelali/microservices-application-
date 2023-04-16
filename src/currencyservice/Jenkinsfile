@@ -4,7 +4,9 @@ pipeline {
 
     environment {
         ACR_REPO_URL = 'microservicesb.azurecr.io'
-        IMAGE_TAG = "1.1.${BUILD_NUMBER}"                   
+        IMAGE_TAG = "1.1.${BUILD_NUMBER}"  
+        SonarQube_url = "http://sonarqube:9000"
+
    }
 
   stages {
