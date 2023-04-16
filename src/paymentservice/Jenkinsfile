@@ -34,7 +34,7 @@ pipeline {
 
                             withSonarQubeEnv('sonarqube') {
 
-                            sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=PaymentService  \
+                            sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=PaymentService   \
                                 -Dsonar.sources=./src/paymentservice  \
                                 -Dsonar.host.url=${SonarQube_url} \
                                 -Dsonar.token=${SonarQube_Token} "
