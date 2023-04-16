@@ -14,7 +14,7 @@ pipeline {
             steps {
                 script {
                     echo "building the docker image..."
-                    sh " docker build -t microservicesb.azurecr.io/frontend:${IMAGE_TAG} ./src/forntend "
+                    sh " docker build -t microservicesb.azurecr.io/frontend:${IMAGE_TAG} ./src/frontend "
 
                     }
                 
