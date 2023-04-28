@@ -12,6 +12,11 @@ pipeline {
   stages {
              
         stage(' build image ') {
+
+            agent {
+                label "build"
+            }
+
             steps {
                 script {
                     echo "building the docker image..."
@@ -23,11 +28,17 @@ pipeline {
         }
 
         stage('SonarQube analysis') {
+
+            agent {
+                    label "sonarqube"
+                }
+
             environment {
                 SonarQube_Token = credentials('ShippingServiceToken')
                 
             }
-           steps{
+
+            steps{
                 script {
                     
                     def scannerHome = tool 'sonar-scanner';
@@ -44,7 +55,19 @@ pipeline {
             }
         }
         
+        stage('image scanning ') {
 
+            agent {
+                label "trivy"
+            }
+
+            steps {
+                script {
+                    echo "scanning the docker image..."
+                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL microservicesb.azurecr.io/shippingservice:${IMAGE_TAG}"
+                }
+            }
+        }
         stage(' push image to ACR ') {
             steps {
                 script {
