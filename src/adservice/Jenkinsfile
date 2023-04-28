@@ -14,8 +14,10 @@ pipeline {
 
   stages {
 
-             
         stage(' build image ') {
+            agent {
+                label "Build"
+            }
             steps {
                 script {
                     echo "building the docker image..."
@@ -30,6 +32,9 @@ pipeline {
        
 
         stage('SonarQube analysis') {
+            agent {
+                label "SonarQube"
+            }
             environment {
                 SonarQube_Token = credentials('adServiceToken')
                 
@@ -46,9 +51,24 @@ pipeline {
                 }
             }
         }
-       
-    
+  
+
+        stage('image scanning ') {
+            agent {
+                label "trivy"
+            }
+            steps {
+                script {
+                    echo "scanning the docker image..."
+                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL microservicesb.azurecr.io/adservice:${IMAGE_TAG} "
+                }
+            }
+        }
+ 
         stage(' push image to ACR ') {
+            agent {
+                label "push"
+            }
             steps {
                 script {
                     echo "pushing the docker image..."
@@ -63,7 +83,7 @@ pipeline {
             }
         }
     
-        stage('trriger ArgoCD application') {
+        stage('trriger ArgoCD application') {   
 
         steps {
             script {
