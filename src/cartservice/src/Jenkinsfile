@@ -12,6 +12,9 @@ pipeline {
   stages {
              
         stage(' build image ') {
+            agent {
+                label "Build"
+            }
             steps {
                 script {
                     echo "building the docker image..."
@@ -24,6 +27,9 @@ pipeline {
         }
 
         stage('SonarQube Analysis') {
+            agent {
+                label "SonarQube"
+            }
             
             environment {
                 SonarQube_Token = credentials('CartToken')
@@ -43,6 +49,18 @@ pipeline {
                         -Dsonar.token=${SonarQube_Token} "
                     
                     } 
+                }
+            }
+        }
+
+        stage('image scanning ') {
+            agent {
+                label "trivy"
+            }
+            steps {
+                script {
+                    echo "scanning the docker image..."
+                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL microservicesb.azurecr.io/cartservice:${IMAGE_TAG} "
                 }
             }
         }
