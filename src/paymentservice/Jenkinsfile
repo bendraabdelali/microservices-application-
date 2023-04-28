@@ -11,6 +11,11 @@ pipeline {
   stages {
              
         stage(' build image ') {
+
+            agent {
+                label "build"
+            }
+
             steps {
                 script {
                     echo "building the docker image..."
@@ -23,27 +28,45 @@ pipeline {
 
         
         stage('SonarQube analysis') {
-                    environment {
-                        SonarQube_Token = credentials('PaymentServiceToken')
+            agent {
+                    label "sonarqube"
+                }
+                
+            environment {
+                    SonarQube_Token = credentials('PaymentServiceToken')
+                    
+            }
+            steps{
+                    script {
                         
-                    }
-                steps{
-                        script {
-                            
-                            def scannerHome = tool 'sonar-scanner';
+                        def scannerHome = tool 'sonar-scanner';
 
-                            withSonarQubeEnv('sonarqube') {
+                        withSonarQubeEnv('sonarqube') {
 
-                            sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=PaymentService   \
-                                -Dsonar.sources=./src/paymentservice  \
-                                -Dsonar.host.url=${SonarQube_url} \
-                                -Dsonar.token=${SonarQube_Token} "
-                            
-                            } 
-                        }
+                        sh " ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=PaymentService   \
+                            -Dsonar.sources=./src/paymentservice  \
+                            -Dsonar.host.url=${SonarQube_url} \
+                            -Dsonar.token=${SonarQube_Token} "
+                        
+                        } 
                     }
                 }
+            }
 
+        stage('image scanning ') {
+
+            agent {
+                label "trivy"
+            }
+
+            steps {
+                script {
+                    echo "scanning the docker image..."
+                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL microservicesb.azurecr.io/paymentservice:${IMAGE_TAG}"
+                }
+            }
+        }
+        
         stage(' push image to ACR ') {
             steps {
                 script {
