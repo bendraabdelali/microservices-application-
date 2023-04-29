@@ -60,7 +60,7 @@ pipeline {
             steps {
                 script {
                     echo "scanning the docker image..."
-                    sh "trivy image --exit-code 1 --severity HIGH,CRITICAL microservicesb.azurecr.io/cartservice:${IMAGE_TAG} "
+                    sh "trivy  --exit-code 1 --severity HIGH,CRITICAL microservicesb.azurecr.io/cartservice:${IMAGE_TAG} "
                 }
             }
         }
