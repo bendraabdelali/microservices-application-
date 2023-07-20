@@ -1,0 +1,49 @@
+- name: copy files 
+  copy:
+    src: files/{{ item }}
+    dest: /tmp/
+  with_items:
+    - packages8.tar.gz
+    - postgress8.tar.gz
+    - dump.sql
+
+- name: extract archive folders 
+  unarchive:
+    src: /tmp/{{ item }}
+    dest: /tmp/ 
+  with_items:
+    - packages8.tar.gz
+    - postgress8.tar.gz
+  
+
+- name: remove packages tar file
+  file:
+    path: /tmp/{{ item }}
+    state: absent
+  with_items:
+    - packages8.tar.gz
+    - postgress8.tar.gz
+
+# - name: install python3 
+#   shell: rpm -ivh --replacepkgs --replacefiles *.rpm
+#   args:
+#     chdir: /tmp/packages8/python3/
+
+# - name: install python3 packages
+#   shell: pip3.6 install --no-index --find-links *
+#   args:
+#     chdir: /tmp/packages8/PipPackages/
+
+- name: install postgress packages
+  shell: rpm -ivh --replacepkgs --replacefiles *.rpm
+  args:
+    chdir: /tmp/postgress8/
+
+- name: install python3-psycopg2 packages
+  shell: rpm -ivh --replacepkgs --replacefiles *.rpm
+  args:
+    chdir:  /tmp/packages8/python3-psycopg2/
+
+# - name : change permissions of dump.sql
+#   shell: chmod -R a+rwX /tmp/dump.sql
+  
